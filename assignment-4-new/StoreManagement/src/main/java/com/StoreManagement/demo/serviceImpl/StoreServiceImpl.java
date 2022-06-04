@@ -19,7 +19,12 @@ public class StoreServiceImpl implements StoreService {
 	private StoreDetailRepo storeDetailRepo;
 	
 	@Override
-	public StoreEntity addStore(Store store) {
+	public void addStore(Store store) throws Exception {
+//		validation
+		if (store.getStoreName().isEmpty()||store.getAddressLine1().isEmpty()||store.getState().isEmpty()
+				||store.getCountry().isEmpty()||store.getPincode().isEmpty()||store.getPhNumber().isEmpty()){
+			throw new Exception("Insufficient Details");
+		}
 		
 		StoreEntity storeEntity = new StoreEntity();
 		storeEntity.setName(store.getStoreName());
@@ -31,9 +36,7 @@ public class StoreServiceImpl implements StoreService {
 		storeEntity.setPhNumber(store.getPhNumber());
 		storeEntity.setEmail(store.getEmail());
 		
-//		BeanUtils.copyProperties(store, storeEntity);
 		StoreEntity newStore = storeDetailRepo.save(storeEntity);
-		return newStore;
 	}
 
 	@Override

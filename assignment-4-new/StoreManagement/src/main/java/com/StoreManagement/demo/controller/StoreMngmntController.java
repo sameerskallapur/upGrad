@@ -22,13 +22,23 @@ public class StoreMngmntController {
 	private StoreService storeService;
 	
 	
-	@PostMapping("/addStore")
-	public StoreEntity addStore(@RequestBody Store newStore) {
-		StoreEntity store = storeService.addStore(newStore);
-		return store;
+	@PostMapping("/store/add")
+	public ResponseEntity<String> addStore(@RequestBody Store newStore) {
+		String message = null;
+		HttpStatus status ;
+		try {
+			 storeService.addStore(newStore);
+			 message = "new Store added";
+			 status = HttpStatus.OK;
+		} catch (Exception e) {
+			e.printStackTrace();
+			message = e.getMessage();
+			status = HttpStatus.BAD_REQUEST;
+		}
+		return ResponseEntity.status(status).body(message);
 	}
 	
-	@GetMapping("/getStoreDetails/{id}")
+	@GetMapping("/store/getDetails/{id}")
 	public ResponseEntity<StoreEntity> getStoreDetails(@PathVariable("id") String storeId){
 		 StoreEntity store = storeService.getStore(storeId);
 		if (store == null) {
@@ -37,7 +47,7 @@ public class StoreMngmntController {
 		return new ResponseEntity<StoreEntity>(store , HttpStatus.OK);
 	}
 	
-	@GetMapping("/getStoresOnPincode/{pincode}")
+	@GetMapping("/store/getBasedOnPincode/{pincode}")
 	public ResponseEntity<List<StoreEntity>> getStoreDetailsOnPincpde(@PathVariable("pincode") String pincode){
 		 List<StoreEntity> store = storeService.getStoresOnPincode(pincode);
 		if (store == null) {

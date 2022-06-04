@@ -11,7 +11,7 @@ import com.StoreManagement.demo.pojos.Store;
 @Service
 public interface StoreService {
 
-	public StoreEntity addStore(Store store);
+	public void addStore(Store store) throws Exception;
 	
 	public StoreEntity getStore(String storeId);
 
