@@ -9,12 +9,15 @@ import org.springframework.stereotype.Component;
 
 import com.ordermanagement.dto.Address;
 import com.ordermanagement.dto.Order;
+import com.ordermanagement.dto.OrderLine;
 import com.ordermanagement.entity.AddressEntity;
 import com.ordermanagement.entity.OrderEntity;
+import com.ordermanagement.entity.OrderLineEntity;
 import com.ordermanagement.repository.AddressRepository;
 import com.ordermanagement.repository.OrderLineRepository;
 import com.ordermanagement.repository.OrderRepository;
 import com.ordermanagement.service.OrderManagementService;
+import com.ordermanagement.statusEnum.OrderLineStatus;
 import com.ordermanagement.statusEnum.OrderStatus;
 
 @Component
@@ -37,9 +40,36 @@ public class OrderManagementServiceImpl implements OrderManagementService {
 		addressEntity.setCountry(order.getAddress().getCountry());
 		addressEntity.setPincode(order.getAddress().getPincode());
 		addressRepository.save(addressEntity);
+		
+		List<OrderLineEntity> allOrderLineEntity = new ArrayList<>();
+		
+		for (OrderLine orderLine : order.getOrderLines()) {
+			OrderLineEntity orderlineEntity = new OrderLineEntity();
+			orderlineEntity.setEta(orderLine.getEta());
+			orderlineEntity.setItem(orderLine.getItem());
+			orderlineEntity.setPrice(orderLine.getPrice());
+			orderlineEntity.setQuantity(orderLine.getQuantity());
+			
+			if (orderLine.getStatus().equals("open")) {
+				orderlineEntity.setStatus(OrderLineStatus.OPEN.toString());
+			} else if (orderLine.getStatus().equals("cancel")) {
+				orderlineEntity.setStatus(OrderLineStatus.CANCELLED.toString());
+			}else if (orderLine.getStatus().equals("completed")) {
+				orderlineEntity.setStatus(OrderLineStatus.DELIVERED.toString());
+			}else if (orderLine.getStatus().equals("cancelled")) {
+				orderlineEntity.setStatus(OrderLineStatus.CANCELLED.toString());
+			}
+			
+//			orderlineEntity.setStatus(orderLine.getStatus());
+			allOrderLineEntity.add(orderlineEntity);
+		}
+		orderLineRepository.saveAll(allOrderLineEntity);
+		
+		orderEntity.setOrderLines(allOrderLineEntity);
+		
 		orderEntity.setTotalAmount(order.getTotalAmount());
 		orderEntity.setOrderDate(order.getOrderDate());
-		orderEntity.setOrderLines(order.getOrderLines());
+//		orderEntity.setOrderLines(order.getOrderLines());
 		if (order.getStatus().equals("open")) {
 			orderEntity.setStatus(OrderStatus.OPEN.toString());
 		} else if (order.getStatus().equals("cancel")) {

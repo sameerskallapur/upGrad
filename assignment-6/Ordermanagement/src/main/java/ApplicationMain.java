@@ -17,7 +17,7 @@ public class ApplicationMain {
 		add1.setCountry("India");
 		add1.setPincode("123");
 		
-		OrderLine oLine1 = new OrderLine("laptop", 20000, 2, getDate("31/03/2022") ,OrderLineStatus.OPEN );
+		OrderLine oLine1 = new OrderLine("laptop", 20000, 2, getDate("31/03/2022") ,OrderLineStatus.OPEN .toString());
 		System.out.println(oLine1.getEta());
 		
 		

@@ -13,7 +13,7 @@ import javax.persistence.Table;
 public class AddressEntity {
 
 	@Id
-	@GeneratedValue(strategy =  GenerationType.AUTO)
+	@GeneratedValue(strategy =  GenerationType.IDENTITY)
 	private Integer id;
 	private String city;
 	private String pincode;

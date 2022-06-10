@@ -18,11 +18,11 @@ public class OrderLine {
 	@Min(value = 1, message = "quantity cant be less than 1")
 	private int quantity;
 	private Date eta;
-	private OrderLineStatus status;
+	private String status;
 	
 	public OrderLine(@NotNull(message = "item cannot be null") String item,
 			@Min(value = 1, message = "price cant be less than 1") int price,
-			@Min(value = 1, message = "quantity cant be less than 1") int quantity, Date eta, OrderLineStatus status) {
+			@Min(value = 1, message = "quantity cant be less than 1") int quantity, Date eta, String status) {
 		super();
 		this.item = item;
 		this.price = price;
@@ -56,13 +56,14 @@ public class OrderLine {
 		this.eta = eta;
 	}
 
-	public OrderLineStatus getStatus() {
+	public String getStatus() {
 		return status;
 	}
 
-	public void setStatus(OrderLineStatus status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
+
 	
 	
 	

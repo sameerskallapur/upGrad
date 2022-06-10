@@ -21,14 +21,14 @@ import com.ordermanagement.statusEnum.OrderLineStatus;
 public class OrderLineEntity {
 
 	@Id
-	@GeneratedValue(strategy =  GenerationType.AUTO)
+	@GeneratedValue(strategy =  GenerationType.IDENTITY)
 	private Integer id;
 	
 	private String item;
 	private int price;
 	private int quantity;
 	private Date eta;
-	private OrderLineStatus status;
+	private String status;
 	
 //	@OneToMany(targetEntity = AddressEntity.class, cascade = CascadeType.ALL)
 //	@JoinColumn(name = "orderLine_address_fk" , referencedColumnName = "id")
@@ -64,10 +64,10 @@ public class OrderLineEntity {
 	public void setEta(Date eta) {
 		this.eta = eta;
 	}
-	public OrderLineStatus getStatus() {
+	public String getStatus() {
 		return status;
 	}
-	public void setStatus(OrderLineStatus status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 

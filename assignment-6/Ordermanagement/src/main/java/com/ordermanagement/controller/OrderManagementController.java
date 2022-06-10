@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ordermanagement.dto.Order;
@@ -16,26 +17,27 @@ import com.ordermanagement.entity.OrderEntity;
 import com.ordermanagement.service.OrderManagementService;
 
 @RestController
+@RequestMapping("/api/v1/orderManagement")
 public class OrderManagementController {
 	
 	@Autowired
 	private OrderManagementService orderManagementService;
 	
-	@PostMapping("/ordermngmt/placeOrder")
-	public 	ResponseEntity<String>  placeOrderr(@RequestBody Order order) {
+	@PostMapping("/placeOrder")
+	public 	ResponseEntity<String>  placeOrder(@RequestBody Order order) {
 		String message = null;
 		try {
 			orderManagementService.placeOrder(order);
 			message = "Placing Order success";
 		} catch (Exception e) {
 			e.printStackTrace();
-			message = e.getMessage();
+			message = "Something went wrong please check again";
 		}
 		return ResponseEntity.status(HttpStatus.OK).body(message);
 		
 	}
 	
-	@GetMapping("/ordermngmt/getOrerById/{id}")
+	@GetMapping("/getOrderById/{id}")
 	public ResponseEntity<OrderEntity> getOrerById(@PathVariable("id") int id){
 		OrderEntity orderEntity = null;
 		try {
@@ -49,7 +51,7 @@ public class OrderManagementController {
 		return new ResponseEntity<OrderEntity>(orderEntity , HttpStatus.OK);
 	}
 	
-	@GetMapping("/ordermngmt/getOrerByPincode/{pincode}")
+	@GetMapping("/getOrderByPincode/{pincode}")
 	public ResponseEntity<List<OrderEntity>> getOrerByPincode(@PathVariable("pincode") String pincode){
 		List<OrderEntity> orderEntity = null;
 		try {

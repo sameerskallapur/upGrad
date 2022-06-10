@@ -21,7 +21,7 @@ import com.ordermanagement.statusEnum.OrderStatus;
 public class OrderEntity {
 	
 	@Id
-	@GeneratedValue(strategy =  GenerationType.AUTO)
+	@GeneratedValue(strategy =  GenerationType.IDENTITY)
 	private Integer id;
 	private int totalAmount;
 	private Date orderDate;
@@ -29,7 +29,7 @@ public class OrderEntity {
 	
 	@OneToMany(targetEntity = OrderLineEntity.class, cascade = CascadeType.ALL)
 	@JoinColumn(name = "order_orderLine_fk" , referencedColumnName = "id")
-	private List<OrderLine> orderLines;
+	private List<OrderLineEntity> orderLines;
 	
 	@OneToOne
 	@JoinColumn(name = "order_address_fk")
@@ -76,13 +76,14 @@ public class OrderEntity {
 		this.status = status;
 	}
 
-	public List<OrderLine> getOrderLines() {
+	public List<OrderLineEntity> getOrderLines() {
 		return orderLines;
 	}
 
-	public void setOrderLines(List<OrderLine> orderLines) {
+	public void setOrderLines(List<OrderLineEntity> orderLines) {
 		this.orderLines = orderLines;
 	}
+
 	
 	
 
