@@ -31,6 +31,10 @@ public class OrderLine {
 		this.status = status;
 	}
 
+	public OrderLine() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public String getItem() {
 		return item;
 	}

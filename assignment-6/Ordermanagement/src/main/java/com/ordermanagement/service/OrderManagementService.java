@@ -10,7 +10,7 @@ import com.ordermanagement.entity.OrderEntity;
 @Service
 public interface OrderManagementService {
 
-	public void placeOrder(Order order);
+	public OrderEntity placeOrder(Order order);
 
 	public OrderEntity getOrderById(int id);
 
